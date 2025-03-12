@@ -1,4 +1,5 @@
 import "./css/style.css";
+import "./components/cardValid/cardWighet.css";
 
 import "./js/app";
 

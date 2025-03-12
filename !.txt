@@ -1,0 +1,78 @@
+// Логика проверки номера карты
+function isValidCardNumber(cardNumber) {
+  const digits = cardNumber.toString().split('').map(Number);
+  let sum = 0;
+  const parity = digits.length % 2;
+
+  for (let i = 0; i < digits.length - 1; i++) {
+    if (i % 2 !== parity) {
+      sum += digits[i];
+    } else if (digits[i] > 4) {
+      sum += 2 * digits[i] - 9;
+    } else {
+      sum += 2 * digits[i];
+    }
+  }
+
+  const checkDigit = digits[digits.length - 1];
+  return checkDigit === ((10 - (sum % 10)) % 10);
+}
+
+// Логика определения платежной системы
+function getPaymentSystem(cardNumber) {
+  const cardNumberStr = cardNumber.toString();
+
+  if (/^4/.test(cardNumberStr)) {
+    return 'Visa';
+  } else if (/^5[1-5]/.test(cardNumberStr)) {
+    return 'MasterCard';
+  } else if (/^3[47]/.test(cardNumberStr)) {
+    return 'American Express';
+  } else if (/^2/.test(cardNumberStr)) {
+    return 'Mir';
+  } else if (/^6(?:011|5)/.test(cardNumberStr)) {
+    return 'Discover';
+  } else {
+    return 'Unknown';
+  }
+}
+
+// Логика взаимодействия с DOM
+function handleCardValidation() {
+  const cardNumberInput = document.getElementById('card-number');
+  const resultElement = document.getElementById('result');
+  const paymentSystemElement = document.getElementById('payment-system');
+
+  const cardNumber = cardNumberInput.value.replace(/\s+/g, ''); // Удаляем пробелы
+
+  if (isValidCardNumber(cardNumber)) {
+    const paymentSystem = getPaymentSystem(cardNumber);
+    resultElement.textContent = 'Номер карты валиден.';
+    paymentSystemElement.textContent = `Платёжная система: ${paymentSystem}`;
+  } else {
+    resultElement.textContent = 'Номер карты невалиден.';
+    paymentSystemElement.textContent = '';
+  }
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проверка карты</title>
+</head>
+<body>
+  <h1>Проверка номера карты</h1>
+  <input type="text" id="card-number" placeholder="Введите номер карты">
+  <button onclick="handleCardValidation()">Проверить</button>
+
+  <div id="result"></div>
+  <div id="payment-system"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

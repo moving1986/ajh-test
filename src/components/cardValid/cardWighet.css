@@ -1,0 +1,33 @@
+.card {
+    width: 400px;
+}
+
+.card-number {
+    width: 200px;
+    height: 25px;
+
+    border-radius: 5px;
+}
+
+.img-disable {
+    opacity: 0.2;
+}
+
+.img-active {
+    opacity: 1;
+}
+
+.payment-system {
+    display: flex;
+    padding: 10px;
+}
+
+.submit {
+    width: 170px;
+    height: 30px;
+
+    background-color: green;
+    color: #fff;
+    border-radius: 5px;
+    border-color: green;
+}
